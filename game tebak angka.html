@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Tebak Angka</title>
+</head>
+<body>
+  <script>
+    function getRandomNumber(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    function playGame() {
+      let player1Score = 0;
+      let player2Score = 0;
+
+      for (let round = 1; round <= 5; round++) {
+        alert(`Putaran ${round}`);
+
+        const player1Guess = prompt('Player 1, masukkan tebakan (1-3):');
+        const player2Guess = prompt('Player 2, masukkan tebakan (1-3):');
+
+        // Validasi jika input berupa angka antara 1 hingga 3
+        if (
+          isNaN(player1Guess) ||
+          isNaN(player2Guess) ||
+          player1Guess < 1 ||
+          player1Guess > 3 ||
+          player2Guess < 1 ||
+          player2Guess > 3
+        ) {
+          alert('Tebakan harus berupa angka antara 1 hingga 3. Coba lagi!');
+          round--; // Jika ada input yang tidak valid, ulangi putaran.
+          continue;
+        }
+
+        // Validasi jika input dari kedua pemain tidak boleh sama
+        if (player1Guess === player2Guess) {
+          alert('Tebakan pemain tidak boleh sama. Coba lagi!');
+          round--; // Jika ada input yang tidak valid, ulangi putaran.
+          continue;
+        }
+
+        const randomNumber = getRandomNumber(1, 3);
+        alert(`Angka yang ditebak: ${randomNumber}`);
+
+        const player1Difference = Math.abs(randomNumber - player1Guess);
+        const player2Difference = Math.abs(randomNumber - player2Guess);
+
+        if (player1Difference < player2Difference) {
+          player1Score++;
+          alert('Player 1 menang putaran ini!');
+        } else {
+          player2Score++;
+          alert('Player 2 menang putaran ini!');
+        }
+      }
+
+      alert('Permainan selesai!\nSkor akhir:\nPlayer 1: ' + player1Score + '\nPlayer 2: ' + player2Score);
+    }
+
+    playGame();
+  </script>
+</body>
+</html>
